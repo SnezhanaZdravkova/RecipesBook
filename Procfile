@@ -1,1 +1,1 @@
-web: gunicorn healthy_recipes.wsgi
+web: gunicorn recipes.wsgi
