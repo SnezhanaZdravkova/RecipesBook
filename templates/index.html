@@ -13,11 +13,11 @@
                 <div class="card md-4">
                     <div class="card-body">
                         <div class="image-container">
-                            {% if "placeholder" in recipes.featured_image.url %}
+                            {% if "placeholder" in recipes.recipe_image.url %}
                             <img class="card-img-top"
-                                src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg">
+                                src="https://res.cloudinary.com/dt7w2kcwb/image/upload/v1668687399/cld-sample-4.jpg">
                             {% else %}
-                            <img class="card-img-top" src=" {{ recipes.featured_image.url }}">
+                            <img class="card-img-top" src=" {{ recipes.recipe_image.url }}">
                             {% endif %}
                             <div class="image-flash">
                                 <p class="author">Author: {{ recipes.author }}</p>
