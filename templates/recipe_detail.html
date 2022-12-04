@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="masthead">
     <div class="container">
@@ -8,16 +6,17 @@
             <div class="col-md-6 masthead-text">
                 <!-- Recipe title goes in these h1 tags -->
                 <h1 class="recipes-title">
+                    {{ recipes.title }}
                 </h1>
                 <!-- Recipe author goes before the | the recipe's created date goes after -->
-                <p class="recipes-subtitle"> | </p>
+                <p class="recipes-subtitle">{{ recipes.author }} | {{ recipes.created_on }}</p>
             </div>
             <div class="d-none d-md-block col-md-6 masthead-image">
                 <!-- The featured image URL goes in the src attribute -->
-                {% if "placeholder" in recipes.featured_image.url %}
+                {% if "placeholder" in recipes.recipe_image.url %}
                 <img src="https://res.cloudinary.com/dt7w2kcwb/image/upload/v1668687399/cld-sample-4.jpg" width="100%">
                 {% else %}
-                <img src="" width="100%">
+                <img src="{{ recipes.recipe_image.url }}" width="100%">
                 {% endif %}
             </div>
         </div>
@@ -30,18 +29,19 @@
             <div class="card-body">
                 <!-- The recipe content goes inside the card-text. -->
                 <!-- Use the | safe filter inside the template tags -->
-                <p class="card-text "></p>
+                <p class="card-text ">{{ recipes.description | safe }}</p>
                 <div class="row">
 
                     <div class="col-1">
                         <!-- The number of likes goes before the closing strong tag -->
-                        <strong class="text-secondary"><i class="far fa-heart"></i> </strong>
+                        <strong class="text-secondary"><i class="far fa-heart"></i>{{ recipes.number_of_likes }}</strong>
                     </div>
                     <div class="col-1">
                         {% with comments.count as total_comments %}
                         <strong class="text-secondary"><i class="far fa-comments"></i>
                             <!-- Our total_comments variable goes before the closing strong tag -->
-                        </strong>
+                        {{ total_comments }}</strong>
+                        
                         {% endwith %}
                     </div>
                 </div>
@@ -58,21 +58,21 @@
             <h3>Comments:</h3>
             <div class="card-body">
                 <!-- We want a for loop inside the tags to iterate through each comment in comments -->
-                {% %}
+                {% for comment in comments %}
                 <div class="comments" style="padding: 10px;">
                     <p class="font-weight-bold">
                         <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
-                        {{ }}
+                        {{ comment.name}}
                         <span class=" text-muted font-weight-normal">
                             <!-- The comment's created date goes here -->
-                            {{ }}
+                            {{ comment.created_on }}
                         </span> wrote:
                     </p>
                     <!-- The body of the comment goes before the | -->
-                    {{  | linebreaks }}
+                    {{ comment.body | linebreaks }}
                 </div>
                 <!-- Our for loop ends here -->
-                {% %}
+                {% endfor %}
             </div>
         </div>
         <div class="col-md-4 card mb-4  mt-3 ">
