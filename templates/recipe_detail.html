@@ -6,10 +6,10 @@
             <div class="col-md-6 masthead-text">
                 <!-- Recipe title goes in these h1 tags -->
                 <h1 class="recipes-title">
-                    {{ recipes.title }}
+                    {{ recipe.title }}
                 </h1>
                 <!-- Recipe author goes before the | the recipe's created date goes after -->
-                <p class="recipes-subtitle">{{ recipes.author }} | {{ recipes.created_on }}</p>
+                <p class="recipes-subtitle">{{ recipe.author }} | {{ recipe.created_on }}</p>
             </div>
             <div class="d-none d-md-block col-md-6 masthead-image">
                 <!-- The featured image URL goes in the src attribute -->
@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col card mb-4  mt-3 left  top">
             <div class="card-body">
-                <!-- The recipe content goes inside the card-text. -->
+                <!-- The recipe description goes inside the card-text. -->
                 <!-- Use the | safe filter inside the template tags -->
                 <p class="card-text ">{{ recipes.description | safe }}</p>
                 <div class="row">
@@ -40,7 +40,7 @@
                         {% with comments.count as total_comments %}
                         <strong class="text-secondary"><i class="far fa-comments"></i>
                             <!-- Our total_comments variable goes before the closing strong tag -->
-                        {{ total_comments }}</strong>
+                            {{ total_comments }}</strong>
                         
                         {% endwith %}
                     </div>

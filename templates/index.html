@@ -13,23 +13,23 @@
                 <div class="card md-4">
                     <div class="card-body">
                         <div class="image-container">
-                            {% if "placeholder" in recipes.recipe_image.url %}
+                            {% if "placeholder" in recipe.recipe_image.url %}
                             <img class="card-img-top"
                                 src="https://res.cloudinary.com/dt7w2kcwb/image/upload/v1668687399/cld-sample-4.jpg">
                             {% else %}
                             <img class="card-img-top" src=" {{ recipes.recipe_image.url }}">
                             {% endif %}
                             <div class="image-flash">
-                                <p class="author">Author: {{ recipes.author }}</p>
+                                <p class="author">Author: {{ recipe.author }}</p>
                             </div>
                         </div>
-                        <a href="#" class="post-link">
-                            <h2 class="card-title">{{ recipes.title }}</h2>
-                            <p class="card-text">{{ recipes.excerpt }}</p>
+                        <a href="{% url 'recipe_detail' recipe.slug %}" class="post-link">
+                            <h2 class="card-title">{{ recipe.title }}</h2>
+                            <p class="card-text">{{ recipe.excerpt }}</p>
                         </a>
                         <hr />
-                        <p class="card-text text-muted h6">{{ recipes.created_on}} <i class="far fa-heart"></i>
-                               {{ recipes.number_of_likes }}</p>
+                        <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
+                               {{ recipe.number_of_likes }}</p>
                     </div>
                 </div>
             </div>
