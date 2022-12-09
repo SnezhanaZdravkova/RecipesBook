@@ -53,9 +53,8 @@ INSTALLED_APPS = [
     'recipes',
 ]
 
-SITE_ID = 1
-
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+SITE_ID = 1
 
 lOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
