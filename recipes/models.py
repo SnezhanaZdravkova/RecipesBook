@@ -5,6 +5,14 @@ from cloudinary.models import CloudinaryField
 STATUS = ((0, "Draft"), (1, "Published"))
 
 
+class Author(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_image = models.ImageField(upload_to="")
+
+    def __str__(self):
+        return self.user.username
+
+
 class Recipes(models.Model):
     title = models.CharField(max_length=200, verbose_name=('Recipe'), unique=True)
     slug = models.SlugField(unique=True, max_length=200)

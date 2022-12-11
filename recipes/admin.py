@@ -1,6 +1,9 @@
 from django.contrib import admin
-from .models import Recipes, Comment
+from .models import Recipes, Comment, Author
 from django_summernote.admin import SummernoteModelAdmin
+
+
+admin.site.register(Author)
 
 
 @admin.register(Recipes)
