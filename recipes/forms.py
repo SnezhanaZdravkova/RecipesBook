@@ -1,4 +1,4 @@
-from .models import Comment, Recipes, Author
+from .models import Comment, Recipes
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 
@@ -17,9 +17,6 @@ class CommentForm(forms.ModelForm):
 
 class CreateRecipeForm(forms.ModelForm):
     """ Create Recipe Form """
-    def __init__(self, *args, **kwargs):
-        super(CreateRecipeForm, self).__init__(*args, **kwargs)
-        self.fields['description'].widget = forms.Textarea(attrs={'rows': 3})
 
     class Meta:
         """
@@ -31,8 +28,6 @@ class CreateRecipeForm(forms.ModelForm):
             'description',
             'preparation',
             'recipe_image',
-            'author',
-            'status',
         ]
         widgets = {
             'description': SummernoteWidget(),
