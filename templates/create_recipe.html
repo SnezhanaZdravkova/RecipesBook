@@ -13,7 +13,6 @@
             <h3>Add your own recipes</h3>
             {{ form | crispy }}
             {% csrf_token %}
-            {{ form.as_p }}
             <button style="margin-top: 10;" type="submit">Add recipe:</button>
         </form>
         {% endif %}
