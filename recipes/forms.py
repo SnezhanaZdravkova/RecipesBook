@@ -35,8 +35,4 @@ class CreateRecipeForm(forms.ModelForm):
             'preparation': SummernoteWidget(),
         }
 
-    def form_valid(self, form):
-        messages.success(self.request,
-                         "Recipe Successfully Added & Awaiting Approval")
-        form.instance.author = self.request.user
-        return super(CreateView, self).form_valid(form)
+    
