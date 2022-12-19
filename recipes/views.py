@@ -5,7 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import generic, View
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-# from django.db.models import Count
+from django.db.models import Count
 # from django.utils.text import slugify
 from django.http import HttpResponseRedirect
 from .models import Recipes, Comment
@@ -86,12 +86,12 @@ class EditComment(UpdateView):
 class RecipeLike(View):
 
     def post(self, request, slug, *args, **kwargs):
-        recipe_like = get_object_or_404(Recipes, slug=slug)
+        post = get_object_or_404(Recipes, slug=slug)
 
-        if recipe_like.likes.filter(id=request.user.id).exists():
-            recipe_like.likes.remove(request.user)
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
         else:
-            recipe_like.likes.add(request.user)
+            post.likes.add(request.user)
 
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
@@ -109,3 +109,18 @@ class CreateRecipe(CreateView):
                          "Recipe Successfully Added & Awaiting Approval")
         form.instance.author = self.request.user
         return super(CreateView, self).form_valid(form)
+
+
+class UpdateRecipe(UpdateView):
+    """ Edit Recipe """
+
+    model = Recipes
+    template_name = 'update_recipe.html'
+    form_class = CreateRecipeForm
+
+    def delete_recipe(request, recipe_id):
+        """ Delete recipe"""
+        recipe = get_object_or_404(Recipes, id=recipe_id)
+        recipe.delete()
+
+        return redirect(reverse('your_recipes'))
