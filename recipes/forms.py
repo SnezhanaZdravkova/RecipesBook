@@ -1,3 +1,4 @@
+
 from .models import Comment, Recipes
 from django import forms
 from django_summernote.widgets import SummernoteWidget
@@ -33,3 +34,9 @@ class CreateRecipeForm(forms.ModelForm):
             'description': SummernoteWidget(),
             'preparation': SummernoteWidget(),
         }
+
+    def form_valid(self, form):
+        messages.success(self.request,
+                         "Recipe Successfully Added & Awaiting Approval")
+        form.instance.author = self.request.user
+        return super(CreateView, self).form_valid(form)
