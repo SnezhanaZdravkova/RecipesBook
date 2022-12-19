@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from cloudinary.models import CloudinaryField
 
 STATUS = ((0, "Draft"), (1, "Published"))
@@ -8,9 +9,10 @@ STATUS = ((0, "Draft"), (1, "Published"))
 class Recipes(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(unique=True, max_length=200)
+    excerpt = models.TextField(blank=True)
     description = models.TextField()
     preparation = models.CharField(max_length=500, blank=True)
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     modefy_on = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe_image = CloudinaryField('image', default='placeholder')
@@ -19,7 +21,6 @@ class Recipes(models.Model):
 
     class Meta:
         ordering = ['title']
-        verbose_name = ('Recipes')
 
     def __str__(self):
         return self.title
@@ -27,10 +28,15 @@ class Recipes(models.Model):
     def number_of_likes(self):
         return self.likes.count()
 
+    def get_absolute_url(self):
+        """Get url after user adds/edits recipe"""
+        return reverse('recipe_detail', kwargs={'id': self.id})
+
 
 class Comment(models.Model):
 
-    recipes = models.ForeignKey(Recipes, on_delete=models.CASCADE, related_name='comment')
+    recipes = models.ForeignKey(Recipes, on_delete=models.CASCADE,
+                                related_name='comment')
     name = models.CharField(max_length=100)
     email = models.EmailField()
     body = models.TextField()
