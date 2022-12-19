@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, reverse
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+# from django.contrib import messages
+# from django.contrib.messages.views import SuccessMessageMixin
+# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic, View
-from django.views.generic import CreateView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+# from django.db.models import Count
+# from django.utils.text import slugify
 from django.http import HttpResponseRedirect
 from .models import Recipes, Comment
 from .forms import CommentForm, CreateRecipeForm
@@ -16,7 +19,7 @@ class RecipesList(generic.ListView):
     paginate_by = 6
 
 
-class RecipeDetail(View):
+class RecipeDetail(DetailView):
     """
     This view is used to display the full recipe details including comments.
     """
@@ -73,15 +76,22 @@ class RecipeDetail(View):
         )
 
 
+class EditComment(UpdateView):
+    """ Edit Comments """
+    model = Comment
+    template_name = 'edit_comment.html'
+    form_class = CommentForm
+
+
 class RecipeLike(View):
 
     def post(self, request, slug, *args, **kwargs):
-        post = get_object_or_404(Recipes, slug=slug)
+        recipe_like = get_object_or_404(Recipes, slug=slug)
 
-        if post.likes.filter(id=request.user.id).exists():
-            post.likes.remove(request.user)
+        if recipe_like.likes.filter(id=request.user.id).exists():
+            recipe_like.likes.remove(request.user)
         else:
-            post.likes.add(request.user)
+            recipe_like.likes.add(request.user)
 
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
@@ -92,25 +102,10 @@ class CreateRecipe(CreateView):
     model = Recipes
     form_class = CreateRecipeForm
     template_name = 'create_recipe.html'
-    success_message = "%(calculated_field)s was created successfully"
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        """
-        This method is called when valid form data has been posted.
-        The signed in user is set as the author of the recipe.
-        """
         messages.success(self.request,
                          "Recipe Successfully Added & Awaiting Approval")
         form.instance.author = self.request.user
         return super(CreateView, self).form_valid(form)
-
-    def get_success_message(self, cleaned_data):
-        """
-        This function overrides the get_success_message() method to add
-        the recipe title into the success message.
-        source: https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
-        """
-        return self.success_message % dict(
-            cleaned_data,
-            calculated_field=self.object.title,
-        )
