@@ -7,10 +7,10 @@ from django_summernote.admin import SummernoteModelAdmin
 class RecipesAdmin(SummernoteModelAdmin):
 
     list_display = ('title', 'slug', 'status', 'created_on')
-    search_fields = ['title', 'slug', 'description']
-    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ['title', 'description']
     list_filter = ('status', 'created_on')
-    summernote_fields = ('description')
+    prepopulated_fields = {'slug': ('title',)}
+    summernote_fields = ('description', 'preparation')
 
 
 @admin.register(Comment)
