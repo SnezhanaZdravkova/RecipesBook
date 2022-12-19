@@ -1,19 +1,20 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Healthy recipes | Add Recipe{% endblock %}
 {% block content %}
+{% load static %}
+{% load cloudinary %}
 {% load crispy_forms_tags %}
+{% if user.is_authenticated %}
 
 <div class="container">
     <div class="row justify-content-center ">        
-        {% if user.is_authenticated %}
-        {% load cloudinary %}
+        
 
         <form method="POST">
             <h3>Add your own recipes</h3>
             {{ form | crispy }}
             {% csrf_token %}
             <button style="margin-top: 10;" type="submit">Add recipe:</button>
+            <a style="margin-top: 10;" href="{% url 'home' %}">Cancel</a>
         </form>
         {% endif %}
     </div>
