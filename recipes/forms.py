@@ -35,4 +35,5 @@ class CreateRecipeForm(forms.ModelForm):
             'preparation': SummernoteWidget(),
         }
 
-    
+    def __init__(self, *args, **kwargs):
+        super(CreateRecipeForm, self).__init__(*args, **kwargs)
