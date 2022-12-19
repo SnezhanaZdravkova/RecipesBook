@@ -118,9 +118,10 @@ class UpdateRecipe(UpdateView):
     template_name = 'update_recipe.html'
     form_class = CreateRecipeForm
 
-    def delete_recipe(request, recipe_id):
-        """ Delete recipe"""
-        recipe = get_object_or_404(Recipes, id=recipe_id)
-        recipe.delete()
 
-        return redirect(reverse('your_recipes'))
+def delete_recipe(request, recipe_id):
+    """ Delete recipe"""
+    recipe = get_object_or_404(Recipes, id=recipe_id)
+    recipe.delete()
+
+    return redirect(reverse('your_recipes'))
