@@ -20,12 +20,21 @@
                             <img class="card-img-top" src=" {{ recipes.recipe_image.url }}">
                             {% endif %}
                             <div class="image-flash">
+                                <h2 class="card-title">{{ recipe.title }}</h2>
+                                <p class="card-text">{{ recipe.excerpt }}</p>
                                 <p class="author">Author: {{ recipe.author }}</p>
                             </div>
                         </div>
-                        <a href="{% url 'recipe_detail' recipe.slug %}" class="post-link">
-                            <h2 class="card-title">{{ recipe.title }}</h2>
-                            <p class="card-text">{{ recipe.description }}</p>
+                        <!-- View link available to all users -->
+                        <a href="{% url 'recipe_detail' recipe.slug %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
+                            View recipe
+                        </a>
+                        <!-- Update and Delete links - for registered Users Only -->
+                        <a href="{% url 'update_recipe' recipe.pk %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
+                            Update
+                        </a>
+                        <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
+                            Delete
                         </a>
                         <hr />
                         <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
@@ -33,6 +42,21 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="col-md-4">
+                <div class="card md-4">
+                    <div class="card-body">
+                        <ol>
+                            {% for recipe_likes in liked_recipes %}
+                            <li>
+                                <a class="text-reset recipe-link" href="{% url 'recipe_likes' recipe_likes.slug %}"
+                                    >{{ recipe_likes.title}} </a>
+                                <hr />
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div> -->
             {% if forloop.counter|divisibleby:3 %}
             </div>
             <div class="row">
@@ -41,6 +65,7 @@
             </div>
         </div>
     </div>
+    <!-- Paginate code credit Code Institute: I think therefor I blog -->
     {% if is_paginated %}
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
