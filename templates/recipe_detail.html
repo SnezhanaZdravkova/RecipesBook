@@ -31,18 +31,23 @@
             <div class="card-body">
                 <!-- The recipe description goes inside the card-text. -->
                 <!-- Use the | safe filter inside the template tags -->
+                <h3>Description:</h3>
                 <p class="card-text ">{{ recipe.description | safe }}</p>
+                <h3>Preparation:</h3>
+                <p class="card-text ">{{ recipe.preparation | safe }}</p>
+                <hr />
+                <p class="card-text ">{{ recipe.excerpt | safe }}</p>
                 <div class="row">
 
                     <div class="col-1">
                         <strong>
                             {% if user.is_autenticated %}
-                            <form class="d-inline" action="{% url 'recipe_likes' recipe.slug %}" method="POST">
+                            <form class="d-inline" action="{% url 'recipe_likes' recipe_likes.slug %}" method="POST">
                                 {% csrf_token %}
                                 {% if liked %}
-                                <button type="submit" name="recipe_id" value="{{ recipe.slug }}" class="btn-like"><i class="fas fa-heart"></i></button>
+                                <button type="submit" name="recipe_id" value="{{ recipe_likes.slug }}" class="btn-like"><i class="fas fa-heart"></i></button>
                                 {% else %}
-                                <button type="submit" name="recipe_id" value="{{ recipe.slug }}" class="btn-like"><i class="far fa-heart"></i></button>
+                                <button type="submit" name="recipe_id" value="{{ recipe_likes.slug }}" class="btn-like"><i class="far fa-heart"></i></button>
                                 {% endif %}
                             </form>
                             {% else %}
@@ -115,5 +120,8 @@
         </div>
     </div>
 </div>
+<!-- {% if user.is_authenticated and user.username == comment.name %}
+    <a href="{% url 'edit_comment' comment.id %}" class="btn-sm btn-success ">Edit</a>
+{% endif %} -->
 
 {% endblock content %}
