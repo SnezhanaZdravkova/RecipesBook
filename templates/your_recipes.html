@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h3>Your Recipes</h3>
+        </div>
+        <div class="col-12 text-center mt-2">
+            <a href="{% url 'create_recipe' %}"><button class="btn-lg btn-warning mb-2">Add Recipe</button></a>
+        </div>
+    </div>
+</div>
+<!-- Recipe -->
+<div class="container_fluid">
+    <div class="row">
+        <div class="col-12 mt-4">
+            <div class="row no-gutters">
+                {% for recipe in page_obj %}
+                <div class="col-md-4">
+                    <div class="card border-0 mb-4 all-recipes-cards">
+                        <a href="{% url 'recipe_details' recipe.slug %}" class="text-decoration-none text-reset">
+                            <div class="image-container">
+                                {% if "placeholder" in recipe.recipe_image.url %}
+                                <img class="card-img-top"
+                                    src="https://res.cloudinary.com/dt7w2kcwb/image/upload/v1668687399/cld-sample-4.jpg">
+                                {% else %}
+                                <img class="card-img-top" src=" {{ recipes.recipe_image.url }}">
+                                {% endif %}
+                                <div class="image-flash">
+                                    <h2 class="card-title">{{ recipe.title }}</h2>
+                                    <p class="card-text">{{ recipe.excerpt }}</p>
+                                    <p class="author">Author: {{ recipe.author }}</p>
+                                </div>
+                                <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
+                                    {{ recipe.number_of_likes }}</p>
+                            </div>
+                        </a>
+                        <div class="text-center">
+                            <span>
+                                <a href="{% url 'update_recipe' recipe.id %}"><button class="btn-sm btn-success ">Update</button></a>
+                            </span>
+                            <span>
+                                <button type="button" class="btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal{{recipe.id}}">Delete</button>
+                            </span>
+                        </div>
+                        <!-- Modal -->
+                        <div id="deleteModal{{recipe.id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                            <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Are you sure you want to delete the recipe {{ post.title }}?</h4>
+                                        <p>This action cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:3 %}
+            </div>
+            <div class="row no-gutters">
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'pagination.html' %}
+{% endif %}
+{% endblock %}
