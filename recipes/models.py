@@ -1,4 +1,13 @@
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import (
+    pre_save,
+    post_save,
+    pre_delete,
+    post_delete,
+    m2m_changed,
+    )
+from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.urls import reverse
 from cloudinary.models import CloudinaryField
@@ -30,7 +39,35 @@ class Recipes(models.Model):
 
     def get_absolute_url(self):
         """Get url after user adds/edits recipe"""
-        return reverse('recipe_detail', kwargs={'id': self.id})
+        return reverse('your_recipes', kwargs={'id': self.id})
+
+
+# I have got the idea for slugify from slagoverflow:
+# https://stackoverflow.com/questions/50436658/how-to-auto-generate-slug-from-my-album-model-in-django-2-0-4
+@receiver(pre_save, sender=Recipes)
+def recipes_pre_save(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(instance.title)
+
+
+# @receiver(pre_delete, sender=Recipes)
+def recipes_pre_delete(sender, instance, *args, **kwargs):
+    print(f"{instance.id} will be removed")
+
+
+# @receiver(post_delete, sender=Recipes)
+def recipes_post_delete(sender, instance, *args, **kwargs):
+    print(f"{instance.id} has removed")
+
+
+# @receiver(m2m_changed, sender=Recipes.likes.through)
+def recipe_likes_changed(sender, instance, action, model, pk__set, *args, **kwargs):
+    # print(args, kwargs)
+    print(action)
+    if action == 'pre_add':
+        print("Was added")
+        qs = model.objects.filter(pk__set=pk__set)
+        print(qs.count())
 
 
 class Comment(models.Model):
