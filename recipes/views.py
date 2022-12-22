@@ -96,6 +96,13 @@ class RecipeLike(View):
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
 
+class YourRecipes(View):
+
+    def get(self, request):
+        if request.user.is_autenticated:
+            recipe = Recipes.objects.filter(author=request.user)
+
+
 class CreateRecipe(CreateView):
     """This view is used to allow logged in users to create a recipe"""
 
