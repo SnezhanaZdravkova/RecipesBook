@@ -3,7 +3,7 @@
 {% load static %}
 {% if user.is_authenticated %}
 <div class="container">
-    <div class="row">
+    <div class="row g-0">
         <div class="col-12 text-center mt-5">
             <h3>Your Recipes</h3>
         </div>
@@ -39,7 +39,7 @@
                         </a>
                         <div class="text-center">
                             <span>
-                                <a href="{% url 'update_recipe' recipe.id %}"><button class="btn-sm btn-success ">Update</button></a>
+                                <a href="{% url 'update_recipe' recipes.id %}"><button class="btn-sm btn-success ">Update</button></a>
                             </span>
                             <span>
                                 <button type="button" class="btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal{{recipe.id}}">Delete</button>
