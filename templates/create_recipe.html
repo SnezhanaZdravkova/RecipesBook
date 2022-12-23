@@ -13,7 +13,7 @@
             <h3>Add your own recipes</h3>
             {{ form | crispy }}
             {% csrf_token %}
-            <button style="margin-top: 10;" type="submit">Add recipe:</button>
+            <button type="submit" class="btn btn-success">Create</button>
             <a class="btn btn-primary m-2" href="{% url 'home' %}">Cancel</a>
         </form>
         {% endif %}
