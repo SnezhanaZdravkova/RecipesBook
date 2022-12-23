@@ -1,9 +1,13 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+# from django.contrib.auth.mixins import (
+# LoginRequiredMixin,
+# UserPassesTestMixin
+# )
 from django.views import generic, View
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, DeleteView
+from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.db.models import Count
 # from django.utils.text import slugify
@@ -83,6 +87,13 @@ class EditComment(UpdateView):
     form_class = CommentForm
 
 
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    comment.delete()
+    return HttpResponseRedirect(reverse(
+        'recipe_detail', args=[comment.recipe.slug]))
+
+
 class RecipeLike(View):
 
     def post(self, request, slug, *args, **kwargs):
@@ -96,11 +107,11 @@ class RecipeLike(View):
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
 
-class YourRecipes(View):
+# class YourRecipes(View):
 
-    def get(self, request):
-        if request.user.is_autenticated:
-            recipe = Recipes.objects.filter(author=request.user)
+#     def get(self, request):
+#         if request.user.is_autenticated:
+#             recipe = Recipes.objects.filter(author=request.user)
 
 
 class CreateRecipe(CreateView):
@@ -124,11 +135,22 @@ class UpdateRecipe(UpdateView):
     model = Recipes
     template_name = 'update_recipe.html'
     form_class = CreateRecipeForm
+    pk_url_kwarg = 'pk'
+    success_url = reverse_lazy('update_recipe')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Recipe Successfully Updated")
+        form.instance.author = self.request.user
+        return super(UpdateRecipe, self).form_valid(form)
+
+    def test_func(self):
+        recipe = self.get_object()
+        return recipe.author == self.request.user
 
 
-def delete_recipe(request, recipe_id):
+def delete_recipe(request, recipes_id):
     """ Delete recipe"""
-    recipe = get_object_or_404(Recipes, id=recipe_id)
+    recipe = get_object_or_404(Recipes, id=recipes_id)
     recipe.delete()
 
-    return redirect(reverse('your_recipes'))
+    return redirect(reverse('home'))
