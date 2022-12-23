@@ -39,7 +39,7 @@ class Recipes(models.Model):
 
     def get_absolute_url(self):
         """Get url after user adds/edits recipe"""
-        return reverse('your_recipes', kwargs={'id': self.id})
+        return reverse('home', kwargs={'id': self.id})
 
 
 # I have got the idea for slugify from slagoverflow:
@@ -50,20 +50,19 @@ def recipes_pre_save(sender, instance, *args, **kwargs):
         instance.slug = slugify(instance.title)
 
 
-# @receiver(pre_delete, sender=Recipes)
+@receiver(pre_delete, sender=Recipes)
 def recipes_pre_delete(sender, instance, *args, **kwargs):
     print(f"{instance.id} will be removed")
 
 
-# @receiver(post_delete, sender=Recipes)
+@receiver(post_delete, sender=Recipes)
 def recipes_post_delete(sender, instance, *args, **kwargs):
     print(f"{instance.id} has removed")
 
 
-# @receiver(m2m_changed, sender=Recipes.likes.through)
+@receiver(m2m_changed, sender=Recipes.likes.through)
 def recipe_likes_changed(sender, instance, action, model, pk__set, *args, **kwargs):
-    # print(args, kwargs)
-    print(action)
+    # print(action)
     if action == 'pre_add':
         print("Was added")
         qs = model.objects.filter(pk__set=pk__set)
@@ -85,3 +84,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.body} by {self.name}"
+
+    def get_absolute_url(self):
+        """Sets absolute URL"""
+        return reverse('recipe_detail', args=[self.recipes.slug])
