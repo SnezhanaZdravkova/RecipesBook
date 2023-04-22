@@ -29,9 +29,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['recipes-book2022.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['recipes-book2022.herokuapp.com', 'snezhanazdravkova-recipe-e0szxrkzs9.us2.codeanyapp.com']
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
