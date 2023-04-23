@@ -26,12 +26,12 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['recipes-book2022.herokuapp.com', 'snezhanazdravkova-recipe-e0szxrkzs9.us2.codeanyapp.com']
+ALLOWED_HOSTS = ['recipes-book2022.herokuapp.com', '8000-snezhanazdravkova-recipe-e0szxrkzs9.us2.codeanyapp.com']
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
