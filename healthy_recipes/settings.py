@@ -42,16 +42,18 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
-    'cloudinary',
-    'crispy_forms',
+    'django.contrib.sites',
+    
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'django_summernote',
     'recipes',
+
+    'crispy_forms',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -163,6 +165,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

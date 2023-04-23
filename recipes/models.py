@@ -16,23 +16,24 @@ STATUS = ((0, "Draft"), (1, "Published"))
 
 
 class Recipes(models.Model):
-    title = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200, unique=True, null=False, blank=False)
     slug = models.SlugField(unique=True, max_length=200)
     excerpt = models.TextField(blank=True)
-    description = models.TextField()
+    description = models.CharField(max_length=500, null=False, blank=False)
     preparation = models.CharField(max_length=500, blank=True)
     created_on = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     modefy_on = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='recipe_owner', on_delete=models.CASCADE)
     recipe_image = CloudinaryField('image', default='placeholder')
+    image_alt = models.CharField(max_length=100, null=True, blank=True)
     status = models.IntegerField(choices=STATUS, default=0)
     likes = models.ManyToManyField(User, related_name='recipe_likes', blank=True)
 
     class Meta:
-        ordering = ['title']
+        ordering = ['-created_on']
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     def number_of_likes(self):
         return self.likes.count()

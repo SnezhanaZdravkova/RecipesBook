@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block content %}
 {% load static %}
 {% load cloudinary %}
@@ -6,17 +7,16 @@
 {% if user.is_authenticated %}
 
 <div class="container">
-    <div class="row justify-content-center ">        
-        
-
-        <form method="POST">
-            <h3>Add your own recipes</h3>
-            {{ form | crispy }}
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success">Create</button>
-            <a class="btn btn-primary m-2" href="{% url 'home' %}">Cancel</a>
-        </form>
-        {% endif %}
-    </div>
+    <form method="POST" enctype="multipart/form-data" class="p-2 form">
+        <h3 class="text-center">Add your own recipes</h3>
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form | crispy }}
+        <div class="text-center">
+            <button type="submit" class="btn btn-success mt-2">Create Recipe</button>
+            <a class="btn btn-primary mt-2" href="{% url 'home' %}">Cancel</a>
+        </div>
+    </form>
 </div>
+{% endif %}
 {% endblock %}

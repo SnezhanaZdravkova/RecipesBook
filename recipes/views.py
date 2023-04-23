@@ -120,13 +120,13 @@ class CreateRecipe(CreateView):
     model = Recipes
     form_class = CreateRecipeForm
     template_name = 'create_recipe.html'
-    success_url = reverse_lazy('home')
+    success_url = '/resipes/'
 
     def form_valid(self, form):
         messages.success(self.request,
                          "Recipe Successfully Added & Awaiting Approval")
         form.instance.author = self.request.user
-        return super(CreateView, self).form_valid(form)
+        return super(CreateRecipe, self).form_valid(form)
 
 
 class UpdateRecipe(UpdateView):
