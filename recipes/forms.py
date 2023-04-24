@@ -41,7 +41,6 @@ class CreateRecipeForm(forms.ModelForm):
             'preparation': 'Recipe Preparation',
             'recipe_image': 'Recipe Image',
             'image_alt': 'Describe Image',
-            
         }
 
     def __init__(self, *args, **kwargs):
