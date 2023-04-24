@@ -4,11 +4,13 @@
 
 <div class="container-fluid">
     <div class="row">
-
+        <h1 class="text-center p-2">
+            Latest Recipes
+        </h1>
         <!-- Recipe Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
-            {% for recipe in recipes_list %}
+            {% for recipe in recipes %}
             <div class="col-md-4">
                 <div class="card md-4">
                     <div class="card-body">
@@ -21,7 +23,7 @@
                             {% endif %}
                             <div class="image-flash">
                                 <h2 class="card-title">{{ recipe.title }}</h2>
-                                <p class="card-text">{{ recipe.excerpt }}</p>
+                                <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
                                 <p class="author">Author: {{ recipe.author }}</p>
                             </div>
                         </div>
