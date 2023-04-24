@@ -28,36 +28,41 @@
                             </div>
                         </div>
                         <!-- View link available to all users -->
-                        <a href="{% url 'recipe_detail' recipe.slug %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
-                            View
-                        </a>
                         <!-- Update and Delete links - for registered Users Only -->
-                        <a href="{% url 'update_recipe' recipe.pk %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
+                        <!-- <a href="{% url 'update_recipe' recipe.pk %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
                             Update
                         </a>
                         <a href="{% url 'delete_recipe' recipe.pk %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
                             Delete
-                        </a>
+                        </a> -->
                         <hr />
                         <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
-                               {{ recipe.number_of_likes }}</p>
+                            {{ recipe.number_of_likes }}
+                        </p>
+                        <a href="{% url 'recipe_detail' recipe.slug %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
+                            View
+                        </a>
+
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-4">
-                <div class="card md-4">
-                    <div class="card-body">
-                        <ol>
-                            {% for recipe_likes in liked_recipes %}
-                            <li>
-                                <a class="text-reset recipe-link" href="{% url 'recipe_likes' recipe_likes.slug %}"
-                                    >{{ recipe_likes.title}} </a>
-                                <hr />
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                </div>
+            <!--Recipe Like/Unlike & Likes Count-->
+            <!-- <div class="col-md-6">                    
+                {% if user.is_authenticated %}
+                <form id="like_form" action="{% url 'recipe_like' recipe.slug %}"
+                    class="d-inline" method="POST">
+                    {% csrf_token %}
+                    {% if liked %}
+                    <button type="submit" name="recipe_id" value="{{ recipe.slug }}"
+                        class="btn btn-md"><i class="fas fa-heart"></i>
+                        {{ recipe.amount_of_likes }} </button>
+                    {% else %}
+                    <button type="submit" name="recipe_id" value="{{ recipe.slug }}"
+                        class="btn btn-md"><i class="far fa-heart"></i>
+                        {{ recipe.amount_of_likes }}</button>
+                    {% endif %}                                                
+                </form>
+                {% endif %}
             </div> -->
             {% if forloop.counter|divisibleby:3 %}
             </div>
