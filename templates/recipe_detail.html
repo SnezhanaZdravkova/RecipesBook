@@ -2,16 +2,16 @@
 
 {% load crispy_forms_tags %}
 {% load static %}
-<div class="masthead">
+<!-- <div class="masthead"> -->
     <div class="container">
         <div class="row g-0">
-            <div class="col-md-6 masthead-text">
+            <!-- <div class="col-md-6 masthead-text"> -->
                 <!-- Recipe title goes in these h1 tags -->
-                <h1 class="recipes-title">
+                <!-- <h1 class="recipes-title">
                     {{ recipe.title }}
                 </h1>
                 
-            </div>
+            </div> -->
             <div class="d-none d-md-block col-md-6 masthead-image">
                 <!-- The featured image URL goes in the src attribute -->
                 {% if "placeholder" in recipes.recipe_image.url %}
@@ -20,12 +20,39 @@
                 <img src="{{ recipes.recipe_image.url }}" alt="{{ recipe.image_alt }}" width="100%">
                 {% endif %}
             </div>
-            <div class="row">
+            <div class="recipe-detail">
+                <h1 class="text-center">{{ recipe.title }}</h1>
+                <p class="text-center">Posted by {{recipe.author}} on {{recipe.created_on}}</p>
+                <hr>
+                <p>{{recipe.description|safe}}</p>
+
+                {% if request.user == recipe.author %} 
+                <div class="text-center">
+                    <a href="{% url 'update_recipe' recipe.id %}" class="btn btn-primary">Update</a>
+                    <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-primary">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>    
+        <div class="recipe-container">
+            <div class="ingredients p-3">
+                <h2>Description</h2>
+                <p>{{ recipe.description|safe }}</p>
+            </div>
+            <div class="instructions p-3">
+                <h2>Preparation</h2>
+                <p>{{ recipe.preparation|safe }}</p>
+            </div>
+        </div>
+    </div>
+<!-- </div>         -->
+
+            <!-- <div class="row">
                 <div class="col card mb-4  mt-3 left  top">
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- The recipe description goes inside the card-text. -->
                         <!-- Use the | safe filter inside the template tags -->
-                        <h3>Description:</h3>
+                        <!-- <h3>Description:</h3>
                         <p class="card-text ">{{ recipe.description|safe }}</p>
                         <h3>Preparation:</h3>
                         <p class="card-text ">{{ recipe.preparation|safe }}</p>
@@ -50,9 +77,9 @@
                             </div>
                             <div class="col-1">
                                 {% with comments.count as total_comments %}
-                                <strong class="text-secondary"><i class="far fa-comments"></i>
+                                <strong class="text-secondary"><i class="far fa-comments"></i> -->
                                     <!-- Our total_comments variable goes before the closing strong tag -->
-                                    {{ total_comments }}
+                                    <!-- {{ total_comments }}
                                 </strong>                                
                                 {% endwith %}
                                 <div class="image-flash">
@@ -79,33 +106,33 @@
                 
                 <div class="col-md-8 card mb-4  mt-3 ">
                     <h3>Comments:</h3>
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- We want a for loop inside the tags to iterate through each comment in comments -->
-                        {% for comment in comments %}
+                        <!-- {% for comment in comments %}
                         <div class="comments" style="padding: 10px;">
-                            <p class="font-weight-bold">
+                            <p class="font-weight-bold"> -->
                                 <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
-                                {{ comment.name}}
-                                <span class=" text-muted font-weight-normal">
+                                <!-- {{ comment.name}}
+                                <span class=" text-muted font-weight-normal"> -->
                                     <!-- The comment's created date goes here -->
-                                    {{ comment.created_on }}
+                                    <!-- {{ comment.created_on }}
                                 </span> wrote:
-                            </p>
+                            </p> -->
                             <!-- The body of the comment goes before the | -->
-                            {{ comment.body | linebreaks }}
-                        </div>
+                            <!-- {{ comment.body | linebreaks }}
+                        </div> -->
                         <!-- Our for loop ends here -->
-                        {% endfor %}
+                        <!-- {% endfor %}
                     </div>
                 </div>
                 {% if user.is_authenticated and user.username == comment.name %}
                     <a href="{% url 'edit_comment' comment.id %}" class="btn-sm btn-success ">Edit</a>
                     <button type="button" class="btn-sm btn-danger" data-toggle="modal" data-target="#myModal">Delete</button> -->
                     <!-- Modal -->
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
+                    <!-- <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog"> -->
                             <!-- Modal content-->
-                            <div class="modal-content">
+                            <!-- <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
@@ -122,9 +149,9 @@
                     </div>
                 {% endif %}
                 <div class="col-md-4 card mb-4  mt-3 ">
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- For later -->
-                        {% if commented %}
+                        <!-- {% if commented %}
                         <div class="alert alert-success" role="alert">
                             Your comment is awaiting approval.
                         </div>
@@ -151,6 +178,6 @@
 
 {% if user.is_authenticated and user.username == comment.name %}
     <a href="{% url 'edit_comment' comment.id %}" class="btn-sm btn-success ">Edit</a>
-{% endif %}
+{% endif %} -->
 
 {% endblock content %}

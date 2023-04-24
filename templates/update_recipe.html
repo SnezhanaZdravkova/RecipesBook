@@ -7,7 +7,7 @@
     <h3>Update Recipe</h3>
     <br>
     <div class="row justify-content-center ">
-        {% if user.is_authenticated and user.pk == recipe.author.pk %}
+        {% if user.is_authenticated and author.pk == recipe.author.pk %}
         {% load cloudinary %}
         <div class="col-11 col-md-8 col-lg-6 mt-3">
             <!--  Update Recipe Form -->
