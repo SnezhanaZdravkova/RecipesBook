@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-# from django.contrib.auth.mixins import (
-# LoginRequiredMixin,
+from django.contrib.auth.mixins import (
+LoginRequiredMixin,
 # UserPassesTestMixin
-# )
+)
 from django.views import generic, View
-from django.views.generic import DetailView, CreateView, DeleteView
+from django.views.generic import DetailView, CreateView, DeleteView, ListView
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.db.models import Count
@@ -16,10 +16,12 @@ from .models import Recipes, Comment
 from .forms import CommentForm, CreateRecipeForm
 
 
-class RecipesList(generic.ListView):
+class RecipesList(ListView):
+    """ View all recipes """
     model = Recipes
     queryset = Recipes.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
+    context_object_name = 'recipes'
     paginate_by = 6
 
 
@@ -114,13 +116,13 @@ class RecipeLike(View):
 #             recipe = Recipes.objects.filter(author=request.user)
 
 
-class CreateRecipe(CreateView):
+class CreateRecipe(LoginRequiredMixin, CreateView):
     """This view is used to allow logged in users to create a recipe"""
 
     model = Recipes
     form_class = CreateRecipeForm
     template_name = 'create_recipe.html'
-    success_url = '/resipes/'
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         messages.success(self.request,
