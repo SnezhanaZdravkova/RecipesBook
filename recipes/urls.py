@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CreateRecipe
+from .views import CreateRecipe, RecipesList
 # from .views import (
 #     RecipesList,
 #     CreateRecipe,
