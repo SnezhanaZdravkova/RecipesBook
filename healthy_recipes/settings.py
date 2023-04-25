@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['recipes-book2022.herokuapp.com', '8000-snezhanazdravkova-recipe-e0szxrkzs9.us2.codeanyapp.com']
+ALLOWED_HOSTS = ['recipes-book2022.herokuapp.com', '8000-snezhanazdravkova-recipe-0xcekgdfdb.us2.codeanyapp.com']
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
