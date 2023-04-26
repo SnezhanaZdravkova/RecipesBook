@@ -27,43 +27,46 @@
                                 <p class="author">Author: {{ recipe.author }}</p>
                             </div>
                         </div>
-                        <!-- View link available to all users -->
+                        {% if user.is_authenticated and author.pk == recipe.author.pk %}
                         <!-- Update and Delete links - for registered Users Only -->
-                        <!-- <a href="{% url 'update_recipe' recipe.pk %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
+                        <a href="{% url 'update_recipe' recipe.pk %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
                             Update
                         </a>
                         <a href="{% url 'delete_recipe' recipe.pk %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
                             Delete
-                        </a> -->
-                        <hr />
-                        <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
-                            {{ recipe.number_of_likes }}
-                        </p>
+                        </a>
+                        {% else %}
+                        <!-- View link available to all users -->
                         <a href="{% url 'recipe_detail' recipe.slug %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">
                             View
                         </a>
-
+                        <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
+                            {{ recipe.number_of_likes }}
+                        </p>
+                        {% endif %}
+                        <hr />
                     </div>
                 </div>
             </div>
+            </div>
             <!--Recipe Like/Unlike & Likes Count-->
-            <!-- <div class="col-md-6">                    
-                {% if user.is_authenticated %}
+            <div class="col-md-6">                    
+                {% if user.is_authenticated and author.pk == recipe.author.pk %}
                 <form id="like_form" action="{% url 'recipe_like' recipe.slug %}"
                     class="d-inline" method="POST">
                     {% csrf_token %}
                     {% if liked %}
                     <button type="submit" name="recipe_id" value="{{ recipe.slug }}"
                         class="btn btn-md"><i class="fas fa-heart"></i>
-                        {{ recipe.amount_of_likes }} </button>
+                        {{ recipe.number_of_likes }} </button>
                     {% else %}
                     <button type="submit" name="recipe_id" value="{{ recipe.slug }}"
                         class="btn btn-md"><i class="far fa-heart"></i>
-                        {{ recipe.amount_of_likes }}</button>
+                        {{ recipe.number_of_likes }}</button>
                     {% endif %}                                                
                 </form>
                 {% endif %}
-            </div> -->
+            </div>
             {% if forloop.counter|divisibleby:3 %}
             </div>
             <div class="row">
