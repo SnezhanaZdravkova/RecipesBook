@@ -55,14 +55,14 @@ class RecipeDetail(DetailView):
         recipe = get_object_or_404(queryset, slug=slug)
         comments = recipe.comments.filter(approved=True).order_by('created_on')
         liked = False
-        if recipe.likes.filter(id=self.request.user.id).exists():
+        if recipe.likes.filter(pk=self.request.author.pk).exists():
             liked = True
 
         comment_form = CommentForm(data=request.POST)
 
         if comment_form.is_valid():
-            comment_form.instance.email = request.user.email
-            comment_form.instance.name = request.user.username
+            comment_form.instance.email = request.author.email
+            comment_form.instance.name = request.author.username
             comment = comment_form.save(commit=False)
             comment.recipes = recipe
             comment.save()
@@ -93,7 +93,7 @@ def delete_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return HttpResponseRedirect(reverse(
-        'recipe_detail', args=[comment.recipe.slug]))
+        'recipe_detail', args=[comment.recipe.pk]))
 
 
 class RecipeLike(View):
@@ -101,10 +101,10 @@ class RecipeLike(View):
     def post(self, request, slug, *args, **kwargs):
         recipe = get_object_or_404(Recipes, slug=slug)
 
-        if recipe.likes.filter(id=request.user.id).exists():
+        if recipe.likes.filter(pk=request.author.pk).exists():
             recipe.likes.remove(request.user)
         else:
-            recipe.likes.add(request.user)
+            recipe.likes.add(request.author)
 
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
