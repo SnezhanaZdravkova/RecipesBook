@@ -101,7 +101,7 @@ class RecipeLike(View):
     def post(self, request, slug, *args, **kwargs):
         recipe = get_object_or_404(Recipes, slug=slug)
 
-        if recipe.likes.filter(pk=request.user.id).exists():
+        if recipe.likes.filter(id=request.user.id).exists():
             recipe.likes.remove(request.user)
         else:
             recipe.likes.add(request.user)
