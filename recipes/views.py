@@ -53,7 +53,7 @@ class RecipeDetail(DetailView):
     def post(self, request, slug, *args, **kwargs):
         queryset = Recipes.objects.filter(status=1)
         recipe = get_object_or_404(queryset, slug=slug)
-        comments = recipe.comments.filter(approved=True).order_by('created_on')
+        comments = recipe.comment.filter(approved=True).order_by('created_on')
         liked = False
         if recipe.likes.filter(pk=self.request.author.pk).exists():
             liked = True
