@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container-fluid ">
     <div class="row">
         <h1 class="text-center p-2">
             Latest Recipes
@@ -16,10 +16,9 @@
                     <div class="card-body">
                         <div class="image-container">
                             {% if "placeholder" in recipe.recipe_image.url %}
-                            <img class="card-img-top"
-                                src="https://res.cloudinary.com/dt7w2kcwb/image/upload/v1668687399/cld-sample-4.jpg">
+                            <img src="https://res.cloudinary.com/dt7w2kcwb/image/upload/v1668687399/cld-sample-4.jpg" class="d-block w-100" alt="served dinner">
                             {% else %}
-                            <img class="card-img-top" src=" {{ recipes.recipe_image.url }}">
+                            <img src="{{ recipes.recipe_image.url }}" class="d-block w-100" alt="{{ image_alt }}" style="width:100%; height:100%;">
                             {% endif %}
                             <div class="image-flash">
                                 <h2 class="card-title">{{ recipe.title }}</h2>
@@ -51,7 +50,7 @@
             </div>
             <!--Recipe Like/Unlike & Likes Count-->
             <div class="col-md-6">                    
-                {% if user.is_authenticated and author.pk == recipe.author.pk %}
+                {% if user.is_authenticated and user.username == recipe_like.name %}
                 <form id="like_form" action="{% url 'recipe_like' recipe.slug %}"
                     class="d-inline" method="POST">
                     {% csrf_token %}

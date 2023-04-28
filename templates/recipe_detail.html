@@ -4,8 +4,8 @@
 {% load static %}
 <!-- <div class="masthead"> -->
     <div class="container">
-        <div class="row g-0">
-            <div class="d-none d-md-block col-md-6">
+        <div class="recipe-image mt-3 p-1">
+            <div class="image-container">
                 <!-- The featured image URL goes in the src attribute -->
                 {% if "placeholder" in recipes.recipe_image.url %}
                 <img src="https://res.cloudinary.com/dt7w2kcwb/image/upload/v1668687399/cld-sample-4.jpg" width="100%">
@@ -25,32 +25,32 @@
                     <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">View</a>
                 </div>
                 {% endif %}
-                    <div class="row">
-                        <div class="col-1">
-                        <strong>
-                            {% if user.is_autenticated and request.user == recipe.author %}
-                            <form class="d-inline" action="{% url 'recipe_like' recipe.slug %}" method="POST">
-                                {% csrf_token %}
-                                {% if liked %}
-                                <button type="submit" name="recipe_id" value="{{ recipe.slug }}" class="btn-like"><i class="fas fa-heart"></i>{{ recipe.number_of_likes }}</button>
-                                {% else %}
-                                <button type="submit" name="recipe_id" value="{{ recipe.slug }}" class="btn-like"><i class="far fa-heart"></i>{{ recipe.number_of_likes }}</button>
-                                {% endif %}
-                            </form>
+                <div class="row">
+                    <div class="col-1">
+                    <strong>
+                        {% if user.is_autenticated and request.user == recipe.author %}
+                        <form class="d-inline" action="{% url 'recipe_like' recipe.slug %}" method="POST">
+                            {% csrf_token %}
+                            {% if liked %}
+                            <button type="submit" name="recipe_id" value="{{ recipe.slug }}" class="btn-like"><i class="fas fa-heart"></i>{{ recipe.number_of_likes }}</button>
                             {% else %}
-                            <span class="text-secondary"><i class="far fa-heart"></i></span>
-                            {% endif %}                           
-                        </strong>
-                        </div>                        
-                        <div class="col-1">
-                        {% with comments.count as total_comments %}
-                        <strong class="text-secondary"><i class="far fa-comments"></i>
-                            <!-- Our total_comments variable goes before the closing strong tag -->
-                            {{ total_comments }}
-                        </strong>                                
-                        {% endwith %}
-                        </div>
+                            <button type="submit" name="recipe_id" value="{{ recipe.slug }}" class="btn-like"><i class="far fa-heart"></i>{{ recipe.number_of_likes }}</button>
+                            {% endif %}
+                        </form>
+                        {% else %}
+                        <span class="text-secondary"><i class="far fa-heart"></i></span>
+                        {% endif %}                           
+                    </strong>
+                    </div>                        
+                    <div class="col-1">
+                    {% with comments.count as total_comments %}
+                    <strong class="text-secondary"><i class="far fa-comments"></i>
+                        <!-- Our total_comments variable goes before the closing strong tag -->
+                        {{ total_comments }}
+                    </strong>                                
+                    {% endwith %}
                     </div>
+                </div>
             </div>
         </div>
         <div class="row">

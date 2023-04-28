@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container-fluid bgimage1">
+    <!--Title-->
+    <h1 class="text-primary text-center">Delete Comment</h1>    
+    <br>
+    <div class="row justify-content-center">
+        {% if user.is_authenticated and user.username == author.name %}
+        <div class="col-xs-12 col-md-4">
+            <form method="post" class="mb-5">
+                {{ form | crispy }}
+                {% csrf_token %}
+                <h5 class="text-danger text text-center">Are You Sure You Want to Delete Your Comment?</h5>
+                <!--Page Links to Submit Recipe Comment Delete or Cancel to Browse pg-->
+                <div class="text-center">                
+                    <button type="submit" class="btn btn-danger mt-2">Delete</button>
+                    <a class="btn btn-primary mt-2" href="{% url 'home' %}">Cancel</a>
+                </div>
+            </form> 
+        </div>
+        {% endif %}
+    </div>
+</div>
+{%endblock%}

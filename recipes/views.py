@@ -89,24 +89,50 @@ class EditComment(UpdateView):
     form_class = CommentForm
 
 
-def delete_comment(request, id):
-    comment = get_object_or_404(Comment, id=id)
-    comment.delete()
-    return HttpResponseRedirect(reverse(
-        'recipe_detail', args=[comment.recipe.id]))
+class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView,):
+    """
+    Commnet Delete View
+    """
+    model = Comment
+    template_name = 'delete_comm.html'
+    success_message = 'Comment Successfully Deleted'
+    success_url = reverse_lazy('home')
+
+    def test_func(self):
+        comment = self.get_object()
+        return comment.name == self.request.user.username
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Function to get success message for Delete
+        Credit: https://stackoverflow.com/questions/24822509/
+        success-message-in-deleteview-not-shown
+        """
+        messages.success(self.request, self.success_message)
+        return super(DeleteComment, self).delete(request, *args, **kwargs)
 
 
-class RecipeLike(View):
+# def delete_comment(request, pk):
+#     """ Users can delete recipes comments """
+#     comment = get_object_or_404(Comment, pk=pk)
+#     context = {'comment': comment}
 
-    def post(self, request, slug, *args, **kwargs):
-        recipe = get_object_or_404(Recipes, slug=slug)
+#     if request.method == 'POST':
+#         comment.delete()
+#         messages.success(request,
+#                          ('You have deleted this comment successfuly.'))
+#         return redirect('home')
 
-        if recipe.likes.filter(id=request.user.id).exists():
-            recipe.likes.remove(request.user)
-        else:
-            recipe.likes.add(request.user)
+#     return render(request, delete_comm.html, context)
 
-        return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
+
+# def delete_comment(request, pk):
+#     comment = get_object_or_404(Comment, pk=pk)
+#     comment.delete()
+#     return HttpResponseRedirect(reverse(
+#         'delete_comm.html', args=[comment.recipe.id]))
+
+
 
 
 # class YourRecipes(View):
@@ -151,8 +177,46 @@ class UpdateRecipe(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 def delete_recipe(request, pk):
-    """ Delete recipe"""
+    """
+    Users can delete recipes
+    """
     recipe = get_object_or_404(Recipes, pk=pk)
-    recipe.delete()
+    context = {'recipe': recipe}
 
-    return redirect(reverse('home'))
+    if request.method == 'POST':
+        recipe.delete()
+        messages.success(request,
+                         ('You have deleted this recipe sucessfully.'))
+        return redirect('home')
+
+    return render(request, 'delete_recipe.html', context)
+
+
+# class DeleteRecipe(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+#     """Delete a recipe"""
+#     model = Recipes
+#     success_url = 'home'
+
+#     def test_func(self):
+#         return self.request.user == self.get_object().user
+
+
+class RecipeLike(View):
+
+    def post(self, request, slug, *args, **kwargs):
+        recipe = get_object_or_404(Recipes, slug=slug)
+
+        if recipe.likes.filter(id=request.user.id).exists():
+            recipe.likes.remove(request.user)
+        else:
+            recipe.likes.add(request.user)
+
+        return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
+
+
+# def delete_recipe(request, pk):
+#     """ Delete recipe"""
+#     recipe = get_object_or_404(Recipes, pk=pk)
+#     recipe.delete()
+
+#     return redirect(reverse('home'))

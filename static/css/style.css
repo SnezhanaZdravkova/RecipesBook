@@ -33,6 +33,8 @@ body {
 .card {
     border: none;
     background-color: transparent;
+    height: 90%;
+    margin-top: 1rem;
 }
 
 .image-container {
@@ -53,27 +55,30 @@ body {
     text-transform: uppercase;
 }
 
-.masthead {
-    margin-top: 10px;
+.recipe-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* margin-top: 10px;
     overflow: hidden;
     position: relative;
     display: inline-block;
     height: 33vh;
-    width: 100%;
+    width: 100%; */
 }
 
-.masthead-text {
+/* .masthead-text {
     background-color: #445261;
     color: white;
     position: relative;
-}
+} */
 
-.masthead-image {
+.recipe-img {
     position: relative;
     overflow: hidden;
 }
 
-.masthead-image:after {
+.recipe-img:after {
     content: "";
     position: absolute;
     top: 0;
