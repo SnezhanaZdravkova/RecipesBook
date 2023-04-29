@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container-fluid bgimage">
+    <div class="row justify-content-md-center">
+        <div class="col-md-6 mt-5 text-center">
+            <h1 class="text-primary">400 Error</h1>
+            <h2 class="text-primary">Bad Request</h2>
+            <br>
+            <p>We are currently unable to handle this request</p>
+            <P>Please return to Our Home Page</p>
+            <a href="{% url 'home' %}" class="btn btn-primary" role="button" aria-pressed="true">Home</a>                                                      
+        </div>
+    </div>
+</div>
+{%endblock%}
