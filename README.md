@@ -1,11 +1,11 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-# [WELCOME TO HEALTHY RECIPES SITE]('https://8000-snezhanazdravkova-recipe-0xcekgdfdb.us2.codeanyapp.com/')
+# [WELCOME TO HEALTHY RECIPES SITE](https://8000-snezhanazdravkova-recipe-0xcekgdfdb.us2.codeanyapp.com/)
 
 
-[Live App link:]('https://8000-snezhanazdravkova-recipe-0xcekgdfdb.us2.codeanyapp.com/')
+[Live App link:](https://git.heroku.com/recipes-book2022.git)
 
-[Git Hub Repository:]('https://github.com/SnezhanaZdravkova/RecipesBook')
+[Git Hub Repository:](https://github.com/SnezhanaZdravkova/RecipesBook)
 
 This is a full-stack framework project built using Django, Python, HTML and CSS. My goal is to create a functioning and responsive website, that allows users:
 - to be able to registers, log in and logout,
@@ -44,6 +44,15 @@ The Comment model allows users to comment on individual recipes and the Recipe i
 
 The diagram below details the database schema: (to be added)
 
+## Balsamiq Wireframes
+
+Wireframes are extremely basic and did not incorporate all App pages. Wireframes were used as boiler plates to start the app design many updates and alterations made after the basic Wireframes were used to get started on the App.
+
+Balsamiq Wireframes:
+- ![Home Page](static/images/home-page.png)
+- ![Logged in user](static/images/loggedin-user.png)
+- ![Mobile View](static/images/mobile-view.png)
+
 ## User Story Testing
 ### Testing Users Stories form (UX) Section
 > Superuser / Admin
@@ -78,7 +87,7 @@ duplicate key value violates unique constraint "recipes_recipes_slug_key"
 DETAIL:  Key (slug)=() already exists.") - the problem was with slug. The issue was fix with slugify:
 (image to be added)
 - likes not working - not fixt issue
-- comments can't be edited or delete (didn't finish code)
+- comments can't be delete (didn't finish code)
 
 ## Future Features
 - To have Search bar
@@ -143,6 +152,17 @@ Add the following Config Vars in Heroku:
 
 The site is now live and operational.
 
+## Clone Project
+
+>> Cloning of Project was made possible by GitHub
+
+- Go to Git Hub
+- Go to the repository
+- Click on it to go to main repository site
+- Click on the Code drop down button menu next to the greeen Gippod button
+- Click on HTTP section you will see the http of the repository click on the window next to it it will say copied
+- Clikced on Download and Zip
+- Clicked on Open with GitHubDesktop
 
 
 
