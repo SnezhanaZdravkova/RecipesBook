@@ -3,7 +3,7 @@
 # [WELCOME TO HEALTHY RECIPES SITE](https://8000-snezhanazdravkova-recipe-0xcekgdfdb.us2.codeanyapp.com/)
 
 
-[Live App link:](https://git.heroku.com/recipes-book2022.git)
+[Heroku git URL:](https://git.heroku.com/recipes-book2022.git)
 
 [Git Hub Repository:](https://github.com/SnezhanaZdravkova/RecipesBook)
 
