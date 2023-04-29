@@ -14,6 +14,7 @@ from django.utils.text import slugify
 from django.http import HttpResponseRedirect
 from .models import Recipes, Comment
 from .forms import CommentForm, CreateRecipeForm
+from django.db.models import Q
 
 
 class RecipesList(ListView):
@@ -23,6 +24,18 @@ class RecipesList(ListView):
     template_name = 'index.html'
     context_object_name = 'recipes'
     paginate_by = 6
+
+    def get_queryset(self, **kwargs):
+        query = self.request.GET.get('q')
+        if query:
+            recipes = self.model.objects.filter(
+                Q(title__icontains=query) |
+                Q(description__icontains=query) |
+                Q(preparation__icontains=query)
+            )
+        else:
+            recipes = self.model.objects.all()
+        return recipes
 
 
 class RecipeDetail(DetailView):
@@ -89,57 +102,11 @@ class EditComment(UpdateView):
     form_class = CommentForm
 
 
-class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView,):
-    """
-    Commnet Delete View
-    """
-    model = Comment
-    template_name = 'delete_comm.html'
-    success_message = 'Comment Successfully Deleted'
-    success_url = reverse_lazy('home')
-
-    def test_func(self):
-        comment = self.get_object()
-        return comment.name == self.request.user.username
-
-    def delete(self, request, *args, **kwargs):
-        """
-        Function to get success message for Delete
-        Credit: https://stackoverflow.com/questions/24822509/
-        success-message-in-deleteview-not-shown
-        """
-        messages.success(self.request, self.success_message)
-        return super(DeleteComment, self).delete(request, *args, **kwargs)
-
-
-# def delete_comment(request, pk):
-#     """ Users can delete recipes comments """
-#     comment = get_object_or_404(Comment, pk=pk)
-#     context = {'comment': comment}
-
-#     if request.method == 'POST':
-#         comment.delete()
-#         messages.success(request,
-#                          ('You have deleted this comment successfuly.'))
-#         return redirect('home')
-
-#     return render(request, delete_comm.html, context)
-
-
-# def delete_comment(request, pk):
-#     comment = get_object_or_404(Comment, pk=pk)
-#     comment.delete()
-#     return HttpResponseRedirect(reverse(
-#         'delete_comm.html', args=[comment.recipe.id]))
-
-
-
-
-# class YourRecipes(View):
-
-#     def get(self, request):
-#         if request.user.is_autenticated:
-#             recipe = Recipes.objects.filter(author=request.user)
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return HttpResponseRedirect(reverse(
+        'delete_comm.html', args=[comment.recipe.id]))
 
 
 class CreateRecipe(LoginRequiredMixin, CreateView):
@@ -192,15 +159,6 @@ def delete_recipe(request, pk):
     return render(request, 'delete_recipe.html', context)
 
 
-# class DeleteRecipe(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-#     """Delete a recipe"""
-#     model = Recipes
-#     success_url = 'home'
-
-#     def test_func(self):
-#         return self.request.user == self.get_object().user
-
-
 class RecipeLike(View):
 
     def post(self, request, slug, *args, **kwargs):
@@ -212,11 +170,3 @@ class RecipeLike(View):
             recipe.likes.add(request.user)
 
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
-
-
-# def delete_recipe(request, pk):
-#     """ Delete recipe"""
-#     recipe = get_object_or_404(Recipes, pk=pk)
-#     recipe.delete()
-
-#     return redirect(reverse('home'))
