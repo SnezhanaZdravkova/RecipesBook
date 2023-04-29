@@ -44,6 +44,25 @@ The Comment model allows users to comment on individual recipes and the Recipe i
 
 The diagram below details the database schema: (to be added)
 
+# Security Features and Defensive Design
+
+## User Authentication
+
+Django's LoginRequiredMixin have been used to make sure that any requests to access secure pages by non-authenticated users / Authors are redirected. Django's UserPassesTestMixin have been used to limit access based on permissions. Eg: To ensure users can only Update / Delete Recipes or Comments for which they are the User / Author.
+
+If the User /Author doesn't pass the test they are shown to the 403 Forbidden Error.
+
+## Form Validation
+
+If incorrect or empty information / data is added to a From, the Form won't submit and a warning will appear to the User / Author informing them what field raised the error
+
+## Database Security
+
+> The Database URL and secret key are stored in the env.py file to prevent unwanted connections to the 
+> Database and this was done at the beginning of the App set up and pushed to GitHub.
+
+> Cross-Site Request Forgery (CSRF) Tokens are used on all Forms within the App.
+
 ## Balsamiq Wireframes
 
 Wireframes are extremely basic and did not incorporate all App pages. Wireframes were used as boiler plates to start the app design many updates and alterations made after the basic Wireframes were used to get started on the App.
