@@ -1,9 +1,9 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-# [WELCOME TO HEALTHY RECIPES SITE](https://8000-snezhanazdravkova-recipe-0xcekgdfdb.us2.codeanyapp.com/)
+# WELCOME TO HEALTHY RECIPES SITE
 
 
-[Heroku git URL:](https://git.heroku.com/recipes-book2022.git)
+[Heroku git URL:]( https://recipes-book2022.herokuapp.com)
 
 [Git Hub Repository:](https://github.com/SnezhanaZdravkova/RecipesBook)
 
