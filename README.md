@@ -1,6 +1,7 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 # WELCOME TO HEALTHY RECIPES SITE
+![Screenshot Mockup](../RecipesBook/static/images/screenshot-mockup_15.jpg)
 
 
 [Heroku git URL:]( https://recipes-book2022.herokuapp.com)
@@ -42,7 +43,7 @@ Django AllAuth was used for the user authentication system.
 In order for the users to create recipes a custom recipe model was required. The recipe author is a foreign key to the User model given a recipe can only have one author.
 The Comment model allows users to comment on individual recipes and the Recipe is a foreign key in the comment model given a comment can only be linked to one recipe.
 
-The diagram below details the database schema: (the file couldn't load. Codeanywhere wouldn't accsept files bigge than 1 mb, sorry)
+![The diagram below details the database schema:](../RecipesBook/static/images/database_chart_flow_15.jpg)
  
 
 
