@@ -70,9 +70,9 @@ If incorrect or empty information / data is added to a From, the Form won't subm
 Wireframes are extremely basic and did not incorporate all App pages. Wireframes were used as boiler plates to start the app design many updates and alterations made after the basic Wireframes were used to get started on the App.
 
 Balsamiq Wireframes:
-- ![Home Page](static/images/home-page.png)
-- ![Logged in user](static/images/loggedin-user.png)
-- ![Mobile View](static/images/mobile-view.png)
+- ![Home Page](../RecipesBook/static/images/home-page.png)
+- ![Logged in user](../RecipesBook/static/images/loggedin-user.png)
+- ![Mobile View](../RecipesBook/static/images/mobile-view.png)
 
 ## User Story Testing
 ### Testing Users Stories form (UX) Section
