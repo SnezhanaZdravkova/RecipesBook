@@ -104,9 +104,10 @@ class EditComment(UpdateView):
 
 def delete_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
+    template_name = 'delete_comm.html'
     comment.delete()
     return HttpResponseRedirect(reverse(
-        'delete_comm.html', args=[comment.recipe.id]))
+        'recipe_detail.html', args=[comment.id]))
 
 
 class CreateRecipe(LoginRequiredMixin, CreateView):

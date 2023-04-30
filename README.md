@@ -42,7 +42,9 @@ Django AllAuth was used for the user authentication system.
 In order for the users to create recipes a custom recipe model was required. The recipe author is a foreign key to the User model given a recipe can only have one author.
 The Comment model allows users to comment on individual recipes and the Recipe is a foreign key in the comment model given a comment can only be linked to one recipe.
 
-The diagram below details the database schema: (to be added)
+The diagram below details the database schema: (the file couldn't load. Codeanywhere wouldn't accsept files bigge than 1 mb, sorry)
+ 
+
 
 # Security Features and Defensive Design
 
